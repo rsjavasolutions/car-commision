@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,22 +17,22 @@ public class CarController {
     @Autowired
     CarRepository carRepository;
 
-    @GetMapping("cars") // zwracanie listy carów
+    @GetMapping("cars")
     public List<Car> getCars(){
         return carRepository.findAll();
     }
 
-    @PostMapping("cars") // dodawanie nowego cara
+    @PostMapping("cars")
     public Car addCar(@RequestBody Car car){
         return carRepository.save(car);
     }
 
     @DeleteMapping("cars/delete/{id}")
-    public ResponseEntity<Car> deleteCar(@PathVariable long id){ //opakowanie wraz z kodami HTTp
-        Optional<Car> optionalCar = carRepository.findById(id); //zwracamy optionala
+    public ResponseEntity<Car> deleteCar(@PathVariable long id){
+        Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isPresent()){
             carRepository.delete(optionalCar.get());
-            return new ResponseEntity<>(HttpStatus.OK); //odpowiedź dla postamana
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
